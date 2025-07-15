@@ -115,3 +115,20 @@ def detect_grid_lines(image_path):
     clustered_ys = [y for y in clustered_ys if tl[1] <= y <= bl[1]]
 
     return intersections, clustered_xs, clustered_ys
+
+
+def cut_cells_from_image(image_path, xs, ys):
+    """Cut cells from an image based on clustered x and y lines positions."""
+    img = cv2.imread(image_path)
+    if img is None:
+        raise ValueError("Could not load image.")
+
+    cells = []
+    for i in range(len(xs) - 1):
+        for j in range(len(ys) - 1):
+            x1, x2 = xs[i], xs[i + 1]
+            y1, y2 = ys[j], ys[j + 1]
+            cell_img = img[y1:y2, x1:x2]
+            cells.append(cell_img)
+
+    return cells

@@ -1,7 +1,7 @@
+# utils.py
+
 import cv2
 import numpy as np
-from itertools import combinations
-import pytesseract
 
 
 def detect_corners_of_grid(intersections):
@@ -37,8 +37,7 @@ def cluster_positions(positions, eps=10):
     return clusters
 
 
-def detect_grid_lines(image_path):
-    img = cv2.imread(image_path)
+def detect_grid_lines(img):
     if img is None:
         raise ValueError("Could not load image.")
 
@@ -117,9 +116,8 @@ def detect_grid_lines(image_path):
     return intersections, clustered_xs, clustered_ys
 
 
-def cut_cells_from_image(image_path, xs, ys):
+def cut_cells_from_image(img, xs, ys):
     """Cut cells from an image based on clustered x and y lines positions."""
-    img = cv2.imread(image_path)
     if img is None:
         raise ValueError("Could not load image.")
 
